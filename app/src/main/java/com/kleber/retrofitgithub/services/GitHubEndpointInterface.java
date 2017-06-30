@@ -1,6 +1,7 @@
 package com.kleber.retrofitgithub.services;
 
 import com.kleber.retrofitgithub.models.Repository;
+import com.kleber.retrofitgithub.models.TopRepositories;
 import com.kleber.retrofitgithub.models.User;
 
 import java.util.List;
@@ -23,6 +24,6 @@ public interface GitHubEndpointInterface {
     Call<User> getUser(@Path("username") String username);
 
     @GET("/search/repositories?q=language:Java&sort=stars&page={page}")
-    Call<List<Repository>> getTopJavaRepos(@Query("page") Integer page);
+    Call<TopRepositories> getTopJavaRepositories(@Query("page") Integer page);
 
 }

@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kleber.retrofitgithub.adapters.GitHubApapter;
 import com.kleber.retrofitgithub.models.Repository;
+import com.kleber.retrofitgithub.models.TopRepositories;
 import com.kleber.retrofitgithub.services.GitHubEndpointInterface;
 
 import java.util.ArrayList;
@@ -68,11 +69,29 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setAdapter(this.adapter);
 
         // Fetch a list of the Github repositories.
-        //Call<List<Repository>> call = this.gitHubEndpointInterface.getUserRepos("klebertiko");
-        Call<List<Repository>> call = this.gitHubEndpointInterface.getTopJavaRepos(1);
+        Call<List<Repository>> repositoriesByOwnerCall = this.gitHubEndpointInterface.getUserRepos("klebertiko");
+        Call<TopRepositories> topJavaRepositoriesCall = this.gitHubEndpointInterface.getTopJavaRepositories(1);
 
-        // Execute the call asynchronously. Get a positive or negative callback.
-        call.enqueue(new Callback<List<Repository>>() {
+        topJavaRepositoriesCall.enqueue(new Callback<TopRepositories>() {
+            @Override
+            public void onResponse(Call<TopRepositories> call, final Response<TopRepositories> response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        repositories.addAll(response.body().getRepositories());
+                        adapter.notifyDataSetChanged();
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<TopRepositories> call, Throwable t) {
+
+            }
+        });
+
+        /*repositoriesByOwnerCall.enqueue(new Callback<List<Repository>>() {
             @Override
             public void onResponse(Call<List<Repository>> call, final Response<List<Repository>> response) {
                 // The network call was a success and we got a response
@@ -91,6 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 // the network call was a failure
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 }
