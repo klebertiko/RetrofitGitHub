@@ -22,7 +22,7 @@ public interface GitHubEndpointInterface {
     @GET("users/{username}")
     Call<User> getUser(@Path("username") String username);
 
-    @GET("/search/repositories?q=language:Java&sort=stars&page=1")
+    @GET("/search/repositories?q=language:Java&sort=stars&page={page}")
     Call<List<Repository>> getTopJavaRepos(@Query("page") Integer page);
 
 }

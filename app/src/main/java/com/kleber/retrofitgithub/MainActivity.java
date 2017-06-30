@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setAdapter(this.adapter);
 
         // Fetch a list of the Github repositories.
-        Call<List<Repository>> call = this.gitHubEndpointInterface.getUserRepos("klebertiko");
+        //Call<List<Repository>> call = this.gitHubEndpointInterface.getUserRepos("klebertiko");
+        Call<List<Repository>> call = this.gitHubEndpointInterface.getTopJavaRepos(1);
 
         // Execute the call asynchronously. Get a positive or negative callback.
         call.enqueue(new Callback<List<Repository>>() {
