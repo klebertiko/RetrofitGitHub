@@ -68,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setItemAnimator(new DefaultItemAnimator());
         this.recyclerView.setAdapter(this.adapter);
 
-        // Fetch a list of the Github repositories.
-        Call<List<Repository>> repositoriesByOwnerCall = this.gitHubEndpointInterface.getUserRepos("klebertiko");
-        Call<TopRepositories> topJavaRepositoriesCall = this.gitHubEndpointInterface.getTopJavaRepositories(1);
+        //Call<List<Repository>> repositoriesByOwnerCall = this.gitHubEndpointInterface.getUserRepos("klebertiko");
+        Call<TopRepositories> topJavaRepositoriesCall = this.gitHubEndpointInterface.getTopRepositories("language:Java", "stars", 1);
 
         topJavaRepositoriesCall.enqueue(new Callback<TopRepositories>() {
             @Override
